@@ -45,5 +45,27 @@ const productExceptSelf = function (nums) {
   return result;
 };
 
-console.log(productExceptSelf([1, 2, 3, 4]));
-console.log(productExceptSelf([-1, 1, 0, -3, 3]));
+// console.log(productExceptSelf([1, 2, 3, 4]));
+// console.log(productExceptSelf([-1, 1, 0, -3, 3]));
+
+/* Good Approach */
+const bestProductExceptSelf = function (nums) {
+  const arraySize = nums.length;
+  const left = new Array(arraySize).fill(0);
+  const right = new Array(arraySize).fill(0);
+  left[0]= 1;
+  right[right.length - 1] = 1;
+  for(let i = 1; i<nums.length -1; i++){
+    left[i] = left[i-1] * nums[i-1];
+  }
+  for(let i=right.length -2; i>=0; i--){
+    right[i] = right[i+1] * nums[i+1];
+  }
+  for(let i=0; i<nums.length; i++){
+    nums[i] = Math.abs(left[i] * right[i]);
+  }
+  return nums;
+}
+
+console.log(bestProductExceptSelf([1, 2, 3, 4]));
+console.log(bestProductExceptSelf([-1, 1, 0, -3, 3]));
